@@ -29,7 +29,6 @@ const Form = (props) => {
     const handleBtn = () => {
         axios.get(`http://localhost:3000/${category}/${selectedState}`)
             .then( res => {
-                console.log(res.data.results)
                 setResults(res.data.results)
             })
     }
