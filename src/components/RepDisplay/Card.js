@@ -22,7 +22,9 @@ const Card = (props) =>{
             {expanded 
                 ? 
                     <div className='extra-info'>
-                        <Typography sx={infoStyle} >District: {result.district}</Typography> 
+                        {result.district !== "" ? 
+                            <Typography sx={infoStyle} >District: {result.district}</Typography> 
+                        : null}
                         <Typography sx={infoStyle} >Phone Number: {result.phone}</Typography>
                         <Typography sx={infoStyle} >Office: {result.office}</Typography>
                         <a style={{...infoStyle}} target="_blank" rel="noopener noreferrer" href={`${result.link}`} >View their website here</a>

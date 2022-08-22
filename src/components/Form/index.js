@@ -16,7 +16,7 @@ const Form = (props) => {
     const { setResults } = props;
     const [category, setCategory] = useState();
     const [selectedState, setState] = useState();
-    const [validationError, setValidationError] = useState();
+    const [validationError, setValidationError] = useState(false);
 
     const handleCategoryChange = (event) => {
         setCategory(event.target.value);
@@ -32,6 +32,19 @@ const Form = (props) => {
                 console.log(res.data.results)
                 setResults(res.data.results)
             })
+    }
+
+    const validateBtn = () =>{
+        if(category === undefined && selectedState === undefined){
+            setValidationError("Please Select Both a Category and the State")
+        }else if(category === undefined){
+            setValidationError("Please select a Category")
+        }else if(selectedState === undefined){
+            setValidationError("Please select a State")
+        }else{
+            setValidationError()
+            handleBtn()
+        }
     }
     
     return(
@@ -52,8 +65,11 @@ const Form = (props) => {
                 } )}
                 </Select>
                 </FormControl>
-                <Button variant='outlined' sx={{width: "150px", borderRadius: "10px", margin: "10px"}} onClick={handleBtn} >Search</Button>
+                <Button variant='outlined' sx={{width: "150px", borderRadius: "10px", margin: "10px"}} onClick={validateBtn} >Search</Button>
             </FormDiv>
+            <div className='errorMsg' style={{height: "100px"}}>
+                {validationError ? <Alert severity="error">{validationError}</Alert> : null}
+            </div>
       </section>
     )
 }
