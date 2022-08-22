@@ -4,10 +4,15 @@ import { Select, MenuItem, FormControl, InputLabel } from "@mui/material"
 import states from './components/states';
 
 function App() {
-  const [category, setCategory] = useState("Senator");
+  const [category, setCategory] = useState();
+  const [selectedState, setState] = useState();
 
-  const handleChange = (event) => {
+  const handleCategoryChange = (event) => {
     setCategory(event.target.value);
+  };
+
+  const handleStateChange = (event) => {
+    setState(event.target.value);
   };
   
   return (
@@ -15,14 +20,19 @@ function App() {
       <header className="App-header">
         <FormControl fullWidth sx={{width: "500px", margin: "25px"}}>
           <InputLabel>Category</InputLabel>
-        <Select label="Category" value={category} onChange={handleChange} >
+        <Select label="Category" value={category} onChange={handleCategoryChange} >
           <MenuItem value={"senators"} >Senators</MenuItem>
           <MenuItem value={"representatives"} >Representatives</MenuItem>
         </Select>
         </FormControl>
-        {states.map((state, idx) =>{
-          return <h5>{state.name}</h5>
-        } )}
+        <FormControl fullWidth sx={{width: "500px", margin: "25px"}}>
+          <InputLabel>State</InputLabel>
+        <Select label="State" value={selectedState} onChange={handleStateChange} >
+          {states.map((state, idx) =>{
+            return <MenuItem key={idx} value={state.abbreviation}>{state.name}</MenuItem>
+          } )}
+        </Select>
+        </FormControl>
       </header>
     </div>
   );
