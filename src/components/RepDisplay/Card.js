@@ -1,39 +1,37 @@
 import React from 'react';
 import { useState } from 'react';
-import styled from "styled-components"
-
-const CardDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30%;
-    border: 2px solid;
-    border-radius: 15px;
-    margin: 10px;
-    padding: 5%;
-`
+import { Grid, Typography } from '@mui/material';
 
 const Card = (props) =>{
     const { result } = props;
     const [expanded, setExpanded] = useState(false)
+    const infoStyle = {backgroundColor: expanded ? "#eee" : "transparent", margin: "5px", padding: "2px"}
 
     return(
-        <CardDiv>
-            <h2>{result.name}</h2>
-            <h3>Party affiliation: {result.party}</h3>
+        <Grid container spacing={1} sx={{padding: "15px", margin: "20px"}}>
+            <Grid item xs={6} sx={{display: "flex", alignItems: "center"}} >
+                <Typography>{result.name}</Typography>
+            </Grid>
+            <Grid item xs={2}>
+                <h3>{result.party.charAt(0)}</h3>
+            </Grid>
+            <Grid item xs={2}>
+                {expanded ? <h5 onClick={() => setExpanded(false)}>See Less ▲</h5>: <h5 onClick={() => setExpanded(true)}>See More ▼</h5>}
+            </Grid>
+            
             {expanded 
                 ? 
                     <div className='extra-info'>
-                        <h4>District: {result.district}</h4> 
-                        <h4>Phone Number: {result.phone}</h4>
-                        <h4>Office: {result.office}</h4>
-                        <a target="_blank" rel="noopener noreferrer" href={`${result.link}`} >View their website here</a>
+                        <Typography sx={infoStyle} >District: {result.district}</Typography> 
+                        <Typography sx={infoStyle} >Phone Number: {result.phone}</Typography>
+                        <Typography sx={infoStyle} >Office: {result.office}</Typography>
+                        <a style={{...infoStyle}} target="_blank" rel="noopener noreferrer" href={`${result.link}`} >View their website here</a>
                     </div>
                 : 
                     null
             }
-            {expanded ? <h5 onClick={() => setExpanded(false)}>See Less ▲</h5>: <h5 onClick={() => setExpanded(true)}>See More ▼</h5>}
-        </CardDiv>
+            
+        </Grid>
     )
 } 
 
