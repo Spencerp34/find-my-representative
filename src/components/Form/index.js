@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Select, MenuItem, FormControl, InputLabel, Button, Alert } from "@mui/material";
 import styled from "styled-components"
 import states from "./states";
+import axios from 'axios';
 
 const FormDiv = styled.div`
     display: flex;
@@ -11,7 +12,8 @@ const FormDiv = styled.div`
     max-width: 850px;
 `
 
-const Form = () => {
+const Form = (props) => {
+    const { setResults } = props;
     const [category, setCategory] = useState();
     const [selectedState, setState] = useState();
     const [validationError, setValidationError] = useState();
@@ -25,7 +27,11 @@ const Form = () => {
     };
 
     const handleBtn = () => {
-        
+        axios.get(`http://localhost:3000/${category}/${selectedState}`)
+            .then( res => {
+                console.log(res.data.results)
+                setResults(res.data.results)
+            })
     }
     
     return(
